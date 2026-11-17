@@ -1,9 +1,14 @@
 # Hombli Christmas Lights for Home Assistant
 
-Local Home Assistant control for the **Hombli Smart Christmas Lights RGB**
-controller, including all 57 scenes exposed by the Hombli app, scene speed and
-scene brightness controls, a compact Sections dashboard, active-scene
-highlighting, and a recording-derived animated preview.
+Local, cloud-free Home Assistant control and a Lovelace dashboard for the
+**Hombli Smart Christmas Lights RGB** controller. These Tuya-powered smart
+Christmas string/fairy lights are controlled through LocalTuya and the supplied
+Home Assistant package, with all 57 built-in RGB scenes/effects, scene speed,
+scene brightness, active-scene highlighting, and an animated LED preview.
+
+The captured datapoint and scene map can also serve as a reference when adapting
+related Tuya RGB string lights, smart fairy lights, or Christmas-tree lights for
+local Home Assistant control.
 
 > [!IMPORTANT]
 > This is a device-specific community project. The DP assignments and scene
@@ -20,6 +25,17 @@ the Button Card project.
 The supplied Sections dashboard combines the light controls, current-scene
 preview, speed and scene-brightness controls, and all 57 scene buttons in one
 wide-screen view.
+
+## Compatibility at a glance
+
+| Item | This project |
+|---|---|
+| Product | Hombli Smart Christmas Lights RGB |
+| Device family | Tuya Wi-Fi RGB smart string/fairy lights |
+| Home Assistant integration | LocalTuya, local network control |
+| Dashboard | Lovelace Sections view with Button Card |
+| Effects | 57 captured Hombli/Tuya scenes on DP25 |
+| Extra controls | Power, animation speed and scene brightness |
 
 ## What is included
 
