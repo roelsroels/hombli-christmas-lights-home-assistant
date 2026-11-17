@@ -13,6 +13,14 @@ highlighting, and a recording-derived animated preview.
 This project is not affiliated with Hombli, Tuya, Home Assistant, LocalTuya, or
 the Button Card project.
 
+## Dashboard preview
+
+![Home Assistant dashboard controlling Hombli Christmas lights](docs/images/dashboard.png)
+
+The supplied Sections dashboard combines the light controls, current-scene
+preview, speed and scene-brightness controls, and all 57 scene buttons in one
+wide-screen view.
+
 ## What is included
 
 - Exact DP25 codes for 57 named scenes from the Hombli app
