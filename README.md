@@ -194,7 +194,8 @@ protocol version and evidence. See [CONTRIBUTING.md](CONTRIBUTING.md).
 - App-originated scene changes do not update
   `input_text.christmas_lights_active_scene` automatically.
 - The preview is illustrative, not a live LED feed.
-- Power monitoring was not found on the tested controller (put a PR was uploaded to the PowerCalc repo).
+- Power monitoring was not found on the tested controller; separate support
+  work has been submitted to the PowerCalc project.
 - DP assignments can differ across Tuya products and firmware versions.
 - The supplied dashboard depends on Button Card.
 

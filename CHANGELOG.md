@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.1 — 2026-11-17
+
+- Added a privacy-safe dashboard screenshot and custom GitHub social preview.
+- Expanded repository metadata, topics and README terminology for better Home
+  Assistant, LocalTuya and Tuya RGB string-light discovery.
+- Linked the exact Hombli source product and documented how the mappings and
+  animated preview were captured from the physical controller.
+- Added the Buy Me a Coffee funding link.
+- Documented the separate PowerCalc work for potential power monitoring.
+
 ## 1.0.0 — 2026-11-17
 
 - Published the verified 57-scene DP25 mapping.
