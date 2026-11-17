@@ -8,7 +8,8 @@ can make a device unresponsive until it is power-cycled or re-paired.
 
 The original setup used:
 
-- Hombli Smart Christmas Lights RGB controller
+- [Hombli Smart Christmas Light RGB](https://hombli.com/collections/ambiance/products/hombli-smart-christmas-light-rgb)
+  controller—the physical source device used to capture and test this project
 - LocalTuya protocol 3.3
 - DP20 for power
 - DP21 for work mode

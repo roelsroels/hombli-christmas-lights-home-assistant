@@ -10,6 +10,19 @@ The captured datapoint and scene map can also serve as a reference when adapting
 related Tuya RGB string lights, smart fairy lights, or Christmas-tree lights for
 local Home Assistant control.
 
+## Source device and project origin
+
+This project was developed and tested with the
+[Hombli Smart Christmas Light RGB](https://hombli.com/collections/ambiance/products/hombli-smart-christmas-light-rgb):
+a 20-metre, Wi-Fi-connected string with 200 individually zoned RGBIC LEDs.
+
+The datapoint assignments, all 57 scene names and DP25 codes, control scripts,
+and animated dashboard preview were captured from this physical controller. We
+observed the Hombli app and LocalTuya traffic, tested each effect on the lights,
+and recorded the real LED animations to build the preview. This is therefore a
+tested configuration for that product—not a generic mapping assumed from other
+Tuya lights.
+
 > [!IMPORTANT]
 > This is a device-specific community project. The DP assignments and scene
 > codes were captured from one Hombli/Tuya controller using LocalTuya protocol
@@ -30,7 +43,7 @@ wide-screen view.
 
 | Item | This project |
 |---|---|
-| Product | Hombli Smart Christmas Lights RGB |
+| Product | [Hombli Smart Christmas Light RGB](https://hombli.com/collections/ambiance/products/hombli-smart-christmas-light-rgb) |
 | Device family | Tuya Wi-Fi RGB smart string/fairy lights |
 | Home Assistant integration | LocalTuya, local network control |
 | Dashboard | Lovelace Sections view with Button Card |
