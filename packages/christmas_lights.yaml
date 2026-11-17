@@ -1,0 +1,323 @@
+# Home Assistant package for the Hombli Smart Christmas Lights RGB controller.
+#
+# Required secret:
+#   hombli_christmas_lights_device_id: "YOUR_TUYA_DEVICE_ID"
+#
+# Confirm the DP assignments on your own controller before use. See
+# docs/COMPATIBILITY.md in this repository.
+
+input_select:
+  christmas_lights_scene:
+    name: Hombli scene
+    icon: mdi:string-lights
+    options:
+      - Rainbow Cascade
+      - Disco dance
+      - Spectrum Sparkle
+      - National holiday
+      - Valentine day
+      - Festive Fireworks
+      - Dreamland
+      - Coral Reef
+      - Polka dots
+      - Aurora Borealis
+      - Celestial Symphony
+      - Water fountain
+      - Candle Light
+      - Cupid's flight
+      - Shiny pearls
+      - Winter Whirlwind
+      - Festival of Lights
+      - Harmonic Hues
+      - Electric blip
+      - Confetti party
+      - Swedish Rave
+      - Mixed signals
+      - Radiant Rhapsody
+      - Prismatic Play
+      - Valentine's favorite
+      - Crazy Colors
+      - Color flash
+      - Strobe
+      - Cosmic Pulse
+      - Fire truck
+      - Electric sparks
+      - Santa's party
+      - Santa's little helpers
+      - Polar Express
+      - Christmas Carol
+      - Reindeer Run
+      - Red white and blue
+      - Dazzling Santa
+      - Crushed ice
+      - Mistletoe Magic
+      - Icicle Illusion
+      - Starry night
+      - Soul pulse
+      - Nordic pulse
+      - Fire storm
+      - Ocean Breeze
+      - Snowy grasslands
+      - Police siren
+      - The hulk
+      - Vibrant Vortex
+      - Glowing lanterns
+      - Cherry wave
+      - Dragon dance
+      - Strawberry disco
+      - Space alien
+      - Mistery Mix
+      - Luminous Lagoon
+
+input_number:
+  christmas_lights_animation_speed:
+    name: Christmas lights animation speed
+    icon: mdi:speedometer
+    min: 1
+    max: 100
+    step: 1
+    mode: slider
+    initial: 50
+  christmas_lights_scene_brightness:
+    name: Christmas lights scene brightness
+    icon: mdi:brightness-6
+    min: 1
+    max: 100
+    step: 1
+    mode: slider
+    initial: 100
+
+input_text:
+  christmas_lights_active_scene:
+    name: Christmas lights active scene
+    icon: mdi:string-lights
+    max: 100
+
+script:
+  christmas_lights_set_scene:
+    alias: Christmas lights - Set Hombli scene
+    description: Selects one of the 57 captured Hombli/Tuya DP25 scenes.
+    icon: mdi:string-lights
+    mode: restart
+    fields:
+      scene_name:
+        name: Scene
+        required: true
+        selector:
+          text:
+    variables:
+      scene_codes:
+        "Rainbow Cascade": "0006"
+        "Disco dance": "0007"
+        "Spectrum Sparkle": "0009"
+        "National holiday": "0015"
+        "Valentine day": "0017"
+        "Festive Fireworks": "0022"
+        "Dreamland": "0023"
+        "Coral Reef": "0024"
+        "Polka dots": "0026"
+        "Aurora Borealis": "0028"
+        "Celestial Symphony": "0034"
+        "Water fountain": "0040"
+        "Candle Light": "0046"
+        "Cupid's flight": "0049"
+        "Shiny pearls": "0057"
+        "Winter Whirlwind": "0002"
+        "Festival of Lights": "0005"
+        "Harmonic Hues": "0008"
+        "Electric blip": "0011"
+        "Confetti party": "0014"
+        "Swedish Rave": "0016"
+        "Mixed signals": "0025"
+        "Radiant Rhapsody": "0029"
+        "Prismatic Play": "0051"
+        "Valentine's favorite": "0003"
+        "Crazy Colors": "0004"
+        "Color flash": "0021"
+        "Strobe": "0037"
+        "Cosmic Pulse": "0055"
+        "Fire truck": "0056"
+        "Electric sparks": "0012"
+        "Santa's party": "0018"
+        "Santa's little helpers": "0019"
+        "Polar Express": "0035"
+        "Christmas Carol": "0038"
+        "Reindeer Run": "0039"
+        "Red white and blue": "0043"
+        "Dazzling Santa": "0044"
+        "Crushed ice": "0045"
+        "Mistletoe Magic": "0050"
+        "Icicle Illusion": "0054"
+        "Starry night": "0058"
+        "Soul pulse": "0020"
+        "Nordic pulse": "0031"
+        "Fire storm": "0036"
+        "Ocean Breeze": "0041"
+        "Snowy grasslands": "0052"
+        "Police siren": "0010"
+        "The hulk": "0013"
+        "Vibrant Vortex": "0027"
+        "Glowing lanterns": "0030"
+        "Cherry wave": "0032"
+        "Dragon dance": "0033"
+        "Strawberry disco": "0042"
+        "Space alien": "0047"
+        "Mistery Mix": "0048"
+        "Luminous Lagoon": "0053"
+      scene_code: "{{ scene_codes.get(scene_name | string, '') }}"
+    sequence:
+      - condition: template
+        value_template: "{{ scene_code | length > 0 }}"
+      - action: input_select.select_option
+        target:
+          entity_id: input_select.christmas_lights_scene
+        data:
+          option: "{{ scene_name }}"
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 20
+          value: true
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 21
+          value: scene
+      - delay:
+          milliseconds: 150
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 25
+          value: "{{ scene_code }}"
+      - action: input_text.set_value
+        target:
+          entity_id: input_text.christmas_lights_active_scene
+        data:
+          value: "{{ scene_name }}"
+
+  christmas_lights_apply_controls:
+    alias: Christmas lights - Apply scene controls
+    description: Applies the selected scene, animation speed and scene brightness.
+    icon: mdi:play
+    mode: restart
+    sequence:
+      - action: script.christmas_lights_set_scene
+        data:
+          scene_name: "{{ states('input_select.christmas_lights_scene') }}"
+      - delay:
+          milliseconds: 150
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 103
+          value: "{{ states('input_number.christmas_lights_animation_speed') | int }}"
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 105
+          value: "{{ states('input_number.christmas_lights_scene_brightness') | int }}"
+
+  christmas_lights_capture_reference:
+    alias: Christmas lights - Capture all scene animations
+    description: Runs all 57 scenes for eight seconds each for a reference video.
+    icon: mdi:video
+    mode: restart
+    sequence:
+      - action: input_number.set_value
+        target:
+          entity_id: input_number.christmas_lights_animation_speed
+        data:
+          value: 50
+      - action: input_number.set_value
+        target:
+          entity_id: input_number.christmas_lights_scene_brightness
+        data:
+          value: 100
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 103
+          value: 50
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 105
+          value: 100
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 20
+          value: false
+      - delay:
+          seconds: 3
+      - repeat:
+          for_each:
+            - Rainbow Cascade
+            - Disco dance
+            - Spectrum Sparkle
+            - National holiday
+            - Valentine day
+            - Festive Fireworks
+            - Dreamland
+            - Coral Reef
+            - Polka dots
+            - Aurora Borealis
+            - Celestial Symphony
+            - Water fountain
+            - Candle Light
+            - Cupid's flight
+            - Shiny pearls
+            - Winter Whirlwind
+            - Festival of Lights
+            - Harmonic Hues
+            - Electric blip
+            - Confetti party
+            - Swedish Rave
+            - Mixed signals
+            - Radiant Rhapsody
+            - Prismatic Play
+            - Valentine's favorite
+            - Crazy Colors
+            - Color flash
+            - Strobe
+            - Cosmic Pulse
+            - Fire truck
+            - Electric sparks
+            - Santa's party
+            - Santa's little helpers
+            - Polar Express
+            - Christmas Carol
+            - Reindeer Run
+            - Red white and blue
+            - Dazzling Santa
+            - Crushed ice
+            - Mistletoe Magic
+            - Icicle Illusion
+            - Starry night
+            - Soul pulse
+            - Nordic pulse
+            - Fire storm
+            - Ocean Breeze
+            - Snowy grasslands
+            - Police siren
+            - The hulk
+            - Vibrant Vortex
+            - Glowing lanterns
+            - Cherry wave
+            - Dragon dance
+            - Strawberry disco
+            - Space alien
+            - Mistery Mix
+            - Luminous Lagoon
+          sequence:
+            - action: script.christmas_lights_set_scene
+              data:
+                scene_name: "{{ repeat.item }}"
+            - delay:
+                seconds: 8
+      - action: localtuya.set_dp
+        data:
+          device_id: !secret hombli_christmas_lights_device_id
+          dp: 20
+          value: false

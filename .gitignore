@@ -1,0 +1,7 @@
+.DS_Store
+*.log
+*.zip
+secrets.yaml
+!examples/secrets.yaml
+.storage/
+__pycache__/

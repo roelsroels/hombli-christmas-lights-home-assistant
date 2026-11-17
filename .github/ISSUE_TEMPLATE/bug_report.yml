@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible problem without exposing device credentials.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include device IDs, local keys, tokens, IP addresses, or private Home Assistant URLs.
+  - type: input
+    id: model
+    attributes:
+      label: Product and model
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware and LocalTuya protocol version
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include steps to reproduce and the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted log excerpt
+      description: Remove all identifiers, keys, addresses, tokens, and URLs.
