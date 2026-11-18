@@ -133,6 +133,13 @@ sections:
         tap_action:
           action: perform-action
           perform_action: script.christmas_lights_apply_controls
+      - type: button
+        entity: input_boolean.christmas_lights_random_cycle
+        name: Random scene cycle
+        icon: mdi:shuffle-variant
+        show_state: true
+        tap_action:
+          action: toggle
   - type: grid
     cards:
       - type: heading

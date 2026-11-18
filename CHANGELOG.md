@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added a dashboard button and package automation for starting and stopping a
+  random scene cycle. It immediately selects a different scene and repeats every
+  30 seconds without changing the selected speed or scene brightness.
+
 ## 1.0.1 — 2026-11-17
 
 - Added a privacy-safe dashboard screenshot and custom GitHub social preview.

@@ -5,6 +5,8 @@ Local, cloud-free Home Assistant control and a Lovelace dashboard for the
 Christmas string/fairy lights are controlled through LocalTuya and the supplied
 Home Assistant package, with all 57 built-in RGB scenes/effects, scene speed,
 scene brightness, active-scene highlighting, and an animated LED preview.
+The dashboard also includes a start/stop control that automatically selects a
+different random scene every 30 seconds.
 
 The captured datapoint and scene map can also serve as a reference when adapting
 related Tuya RGB string lights, smart fairy lights, or Christmas-tree lights for
@@ -57,6 +59,7 @@ wide-screen view.
 - A Home Assistant package with helpers and scripts
 - A four-column Sections dashboard example
 - Compact scene buttons with active-scene highlighting
+- A start/stop random scene cycle that chooses a different effect every 30 seconds
 - An 18-light animated preview calibrated from a full recording of the physical
   light string
 - A reference-capture script for comparing other firmware/device variants
@@ -154,18 +157,24 @@ dashboard file.
 | Entity | Purpose |
 |---|---|
 | `input_select.christmas_lights_scene` | Scene selected in Home Assistant |
+| `input_boolean.christmas_lights_random_cycle` | Enables or stops automatic random scene cycling |
 | `input_number.christmas_lights_animation_speed` | DP103 control |
 | `input_number.christmas_lights_scene_brightness` | DP105 control |
 | `input_text.christmas_lights_active_scene` | Last scene successfully sent by these scripts |
 | `script.christmas_lights_set_scene` | Sends one named scene |
 | `script.christmas_lights_apply_controls` | Sends scene, speed and scene brightness |
 | `script.christmas_lights_capture_reference` | Runs all scenes in order for a comparison video |
+| `automation.christmas_lights_random_scene_cycle` | Selects a different random scene every 30 seconds while enabled |
 
 ## How the dashboard state works
 
 Each scene button calls `script.christmas_lights_set_scene`. The active button
 is highlighted from `input_text.christmas_lights_active_scene`, so merely
 changing the dropdown does not falsely mark a scene as active.
+
+The **Random scene cycle** button changes to a different random scene
+immediately and then every 30 seconds. Press it again to stop. The selected
+speed and scene-brightness values remain unchanged while scenes cycle.
 
 The controller exposes the selected scene code but not its live per-LED frames.
 The animated preview therefore replays a recording-derived approximation. It

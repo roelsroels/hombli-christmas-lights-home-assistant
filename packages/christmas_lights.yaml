@@ -69,6 +69,12 @@ input_select:
       - Mistery Mix
       - Luminous Lagoon
 
+input_boolean:
+  christmas_lights_random_cycle:
+    name: Christmas lights random scene cycle
+    icon: mdi:shuffle-variant
+    initial: false
+
 input_number:
   christmas_lights_animation_speed:
     name: Christmas lights animation speed
@@ -321,3 +327,34 @@ script:
           device_id: !secret hombli_christmas_lights_device_id
           dp: 20
           value: false
+
+automation:
+  - id: christmas_lights_random_scene_cycle
+    alias: Christmas lights - Random scene cycle
+    description: Selects a different random Hombli scene every 30 seconds while enabled.
+    mode: restart
+    trigger:
+      - platform: state
+        entity_id: input_boolean.christmas_lights_random_cycle
+        to: "on"
+    action:
+      - repeat:
+          while:
+            - condition: state
+              entity_id: input_boolean.christmas_lights_random_cycle
+              state: "on"
+          sequence:
+            - variables:
+                random_scene: >-
+                  {{ state_attr('input_select.christmas_lights_scene', 'options')
+                     | reject('equalto', states('input_text.christmas_lights_active_scene'))
+                     | list
+                     | random }}
+            - action: script.christmas_lights_set_scene
+              data:
+                scene_name: "{{ random_scene }}"
+            - wait_template: >-
+                {{ is_state('input_boolean.christmas_lights_random_cycle', 'off') }}
+              timeout:
+                seconds: 30
+              continue_on_timeout: true
