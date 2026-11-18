@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 — 2026-11-18
 
 - Added a dashboard button and package automation for starting and stopping a
   random scene cycle. It immediately selects a different scene and repeats every
   30 seconds without changing the selected speed or scene brightness.
+- Updated the dashboard screenshot to show the random scene cycle in use.
 
 ## 1.0.1 — 2026-11-17
 
