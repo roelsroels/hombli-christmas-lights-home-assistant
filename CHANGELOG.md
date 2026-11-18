@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1 — 2026-11-18
+
+- Fixed random-cycle shutdown detection when scene control uses LocalTuya but
+  the dashboard power entity is provided by the standard Tuya integration.
+- Added the detected power light entity to redacted diagnostics.
+
 ## 2.1.0 — 2026-11-18
 
 - Removed the obsolete pre-HACS package, its duplicate dashboard and its

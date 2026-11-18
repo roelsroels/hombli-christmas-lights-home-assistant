@@ -24,5 +24,6 @@ async def async_get_config_entry_diagnostics(
             "active_scene": controller.active_scene,
             "animation_speed": controller.speed,
             "scene_brightness": controller.brightness,
+            "power_light_entity": controller.power_light_entity_id(),
         },
     }

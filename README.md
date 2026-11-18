@@ -86,7 +86,8 @@ See [Compatibility and safety](docs/COMPATIBILITY.md) before installing.
 - [LocalTuya](https://github.com/rospogrigio/localtuya) configured for the light controller
 - [Button Card](https://github.com/custom-cards/button-card) installed for the
   supplied dashboard and animated preview
-- A LocalTuya light entity for the controller
+- A Home Assistant light entity for the controller, provided by LocalTuya or
+  the standard Tuya integration
 - The Tuya/Hombli device ID and local key obtained through your usual LocalTuya
   setup process
 
@@ -178,8 +179,9 @@ The **Random scene cycle** button changes to a different random scene
 immediately and then every 30 seconds. Press it again to stop. The selected
 speed and scene-brightness values remain unchanged while scenes cycle.
 
-Turning the LocalTuya light off also stops the random cycle immediately. The
-cycle will not turn the string back on at its next scheduled interval.
+Turning the matching LocalTuya or Tuya light off also stops the random cycle
+immediately. The cycle will not turn the string back on at its next scheduled
+interval.
 
 The controller exposes the selected scene code but not its live per-LED frames.
 The animated preview therefore replays a recording-derived approximation. It

@@ -24,6 +24,7 @@ from .const import (
 
 LOCALTUYA_DOMAIN = "localtuya"
 LOCALTUYA_SET_DP = "set_dp"
+TUYA_DOMAIN = "tuya"
 
 
 class HombliChristmasLightsController:
@@ -56,8 +57,8 @@ class HombliChristmasLightsController:
             listener()
 
     @callback
-    def localtuya_light_entity_id(self) -> str | None:
-        """Return the LocalTuya light entity for this physical controller."""
+    def power_light_entity_id(self) -> str | None:
+        """Return the power light entity for this physical controller."""
         device_registry = dr.async_get(self.hass)
         entity_registry = er.async_get(self.hass)
         identifiers = {
@@ -70,7 +71,7 @@ class HombliChristmasLightsController:
             for device in device_registry.devices.values()
             if device.identifiers & identifiers
         }
-        light_entries = [
+        localtuya_entries = [
             entity
             for device_id in device_ids
             for entity in er.async_entries_for_device(entity_registry, device_id)
@@ -78,6 +79,19 @@ class HombliChristmasLightsController:
             and entity.platform == LOCALTUYA_DOMAIN
             and entity.disabled_by is None
         ]
+        # Some installations use LocalTuya for the scene datapoints but expose
+        # the dashboard's power light through Home Assistant's standard Tuya
+        # integration. Tuya entity unique IDs include the same physical device
+        # ID, so match that exact prefix as a reliable cross-integration link.
+        tuya_entries = [
+            entity
+            for entity in entity_registry.entities.values()
+            if entity.domain == "light"
+            and entity.platform == TUYA_DOMAIN
+            and entity.disabled_by is None
+            and entity.unique_id.startswith(f"{TUYA_DOMAIN}.{self.device_id}")
+        ]
+        light_entries = tuya_entries or localtuya_entries
         if not light_entries:
             return None
 
