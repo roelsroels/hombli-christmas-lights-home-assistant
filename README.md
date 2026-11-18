@@ -18,7 +18,7 @@ This project was developed and tested with the
 [Hombli Smart Christmas Light RGB](https://hombli.com/collections/ambiance/products/hombli-smart-christmas-light-rgb):
 a 20-metre, Wi-Fi-connected string with 200 individually zoned RGBIC LEDs.
 
-The datapoint assignments, all 57 scene names and DP25 codes, control scripts,
+The datapoint assignments, all 57 scene names and DP25 codes, control behaviour,
 and animated dashboard preview were captured from this physical controller. We
 observed the Hombli app and LocalTuya traffic, tested each effect on the lights,
 and recorded the real LED animations to build the preview. This is therefore a
@@ -34,9 +34,9 @@ This project is not affiliated with Hombli, Tuya, Home Assistant, LocalTuya, or
 the Button Card project.
 
 > [!NOTE]
-> Version `2.0.0` introduces the HACS custom integration. Existing package
-> users can keep the legacy setup until they are ready to migrate, but should
-> not run both configurations for the same controller at once.
+> Version 2 and later use the HACS custom integration. If you previously used
+> the YAML package from version 1, remove it before adding the integration; see
+> [Migrating from the legacy package](#migrating-from-the-legacy-package).
 
 ## Dashboard preview
 
@@ -62,13 +62,11 @@ wide-screen view.
 - Exact DP25 codes for 57 named scenes from the Hombli app
 - Power, scene mode, speed and scene-brightness control
 - A Home Assistant custom integration prepared for HACS distribution
-- A legacy Home Assistant YAML package for existing installations
 - A four-column Sections dashboard example
 - Compact scene buttons with active-scene highlighting
 - A start/stop random scene cycle that chooses a different effect every 30 seconds
 - An 18-light animated preview calibrated from a full recording of the physical
   light string
-- A reference-capture script for comparing other firmware/device variants
 
 ## Confirmed datapoints
 
@@ -143,58 +141,19 @@ If your light entity is not
 dashboard file. If Home Assistant assigned different entity IDs to the new
 integration, replace the example `hombli_christmas_lights_*` IDs as well.
 
-## Legacy YAML package installation
+## Migrating from the legacy package
 
-Existing package-based installations can continue to use the original setup.
-Do not install the package and HACS integration for the same controller unless
-you intentionally want two sets of controls.
+If you used a pre-2.0 release, migrate once instead of running both versions:
 
-Copy:
+1. Remove or rename `/config/packages/christmas_lights.yaml`.
+2. Restart Home Assistant so its old helpers, scripts and automations disappear.
+3. Install and add the HACS integration using the steps above.
+4. Replace the old dashboard view with `dashboards/sections-view.yaml`.
+5. Remove any remaining dashboard references to the old
+   `input_select`, `input_number`, `input_boolean` and `script` entities.
 
-```text
-packages/christmas_lights.yaml
-```
-
-to:
-
-```text
-/config/packages/christmas_lights.yaml
-```
-
-If packages are not enabled yet, add this beneath the existing
-`homeassistant:` key in `/config/configuration.yaml`:
-
-```yaml
-homeassistant:
-  packages: !include_dir_named packages
-```
-
-Do not create a second `homeassistant:` section.
-
-Add the device ID used by LocalTuya to `/config/secrets.yaml`:
-
-```yaml
-hombli_christmas_lights_device_id: "YOUR_TUYA_DEVICE_ID"
-```
-
-The local key is intentionally not referenced or stored by this package. Keep
-all credentials and identifiers out of Git.
-
-Then check and restart:
-
-In Home Assistant:
-
-1. Open **Developer tools → YAML**.
-2. Run **Check configuration**.
-3. Restart Home Assistant.
-
-The restart is required because the package creates helpers and scripts.
-
-The matching legacy dashboard is retained at:
-
-```text
-dashboards/sections-view-legacy-package.yaml
-```
+LocalTuya and its light entity remain in place; the migration does not require
+re-pairing or changing the controller's local key.
 
 ## Entities created by the HACS integration
 
@@ -234,15 +193,14 @@ The complete captured scene-to-DP25 table is in [docs/SCENES.md](docs/SCENES.md)
 ## Adapting this for a related controller
 
 1. Confirm your DP mapping in LocalTuya diagnostics.
-2. Make a copy of the package; do not overwrite the verified map immediately.
+2. Fork the repository; do not overwrite the verified map immediately.
 3. Test power and work mode first.
 4. Test one scene code at low brightness.
 5. Capture the values reported while selecting scenes in the vendor app.
 6. Update `SCENE_CODES` in
-   `custom_components/hombli_christmas_lights/const.py` and, if retained, the
-   equivalent map in the legacy package.
-7. The legacy package's capture script can still be used to record the real
-   effects.
+   `custom_components/hombli_christmas_lights/const.py`.
+7. Record the physical effects and update the dashboard preview mapping where
+   your controller differs.
 
 Please contribute confirmed mappings with the device model, firmware version,
 protocol version and evidence. See [CONTRIBUTING.md](CONTRIBUTING.md).

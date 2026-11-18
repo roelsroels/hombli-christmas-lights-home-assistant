@@ -23,9 +23,7 @@ or other private installation data.
 - [ ] Python files pass compilation and hassfest validation.
 - [ ] HACS validation passes for the `integration` category.
 - [ ] `manifest.json` and `hacs.json` remain valid JSON.
-- [ ] The package passes Home Assistant's configuration check.
 - [ ] Every scene name matches its `scene_codes` key exactly.
-- [ ] The custom integration and legacy package contain the same scene map.
 - [ ] Dashboard actions match the custom-integration entities.
 - [ ] Documentation describes compatibility and rollback implications.
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0 — 2026-11-18
+
+- Removed the obsolete pre-HACS package, its duplicate dashboard and its
+  secrets example.
+- Replaced the legacy installation documentation with a concise migration path
+  to the HACS integration.
+
 ## 2.0.1 — 2026-11-18
 
 - Stop an active random scene cycle when the matching LocalTuya light turns
