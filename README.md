@@ -107,6 +107,10 @@ for or store the Tuya local key.
 
 Until this repository has been accepted into the default HACS catalogue:
 
+[![Open your Home Assistant instance and add this repository to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=roelsroels&repository=hombli-christmas-lights-home-assistant&category=integration)
+
+Use the button above, or add the repository manually:
+
 1. Open **HACS → Integrations**.
 2. Open the three-dot menu and select **Custom repositories**.
 3. Add

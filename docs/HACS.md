@@ -22,6 +22,7 @@ custom_components/hombli_christmas_lights/
 - HACS and hassfest validation workflow
 - Public README, open-source license, issue template and changelog
 - HACS-first installation and removal documentation
+- One-click My Home Assistant link for adding the custom repository to HACS
 
 ## Before publishing a stable release
 
