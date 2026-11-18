@@ -20,9 +20,13 @@ or other private installation data.
 
 - [ ] No secrets or installation-specific identifiers are committed.
 - [ ] YAML parses successfully.
+- [ ] Python files pass compilation and hassfest validation.
+- [ ] HACS validation passes for the `integration` category.
+- [ ] `manifest.json` and `hacs.json` remain valid JSON.
 - [ ] The package passes Home Assistant's configuration check.
 - [ ] Every scene name matches its `scene_codes` key exactly.
-- [ ] Dashboard action names match package script/entity names.
+- [ ] The custom integration and legacy package contain the same scene map.
+- [ ] Dashboard actions match the custom-integration entities.
 - [ ] Documentation describes compatibility and rollback implications.
 
 Please keep vendor-app spelling in compatibility tables, even when it contains

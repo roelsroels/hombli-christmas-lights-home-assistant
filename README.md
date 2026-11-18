@@ -3,7 +3,7 @@
 Local, cloud-free Home Assistant control and a Lovelace dashboard for the
 **Hombli Smart Christmas Lights RGB** controller. These Tuya-powered smart
 Christmas string/fairy lights are controlled through LocalTuya and the supplied
-Home Assistant package, with all 57 built-in RGB scenes/effects, scene speed,
+HACS custom integration, with all 57 built-in RGB scenes/effects, scene speed,
 scene brightness, active-scene highlighting, and an animated LED preview.
 The dashboard also includes a start/stop control that automatically selects a
 different random scene every 30 seconds.
@@ -33,6 +33,11 @@ Tuya lights.
 This project is not affiliated with Hombli, Tuya, Home Assistant, LocalTuya, or
 the Button Card project.
 
+> [!NOTE]
+> The HACS custom integration is currently a `2.0.0-beta.1` migration from the
+> established YAML package. Existing package users should keep the legacy setup
+> until the integration has been tested on their controller.
+
 ## Dashboard preview
 
 ![Home Assistant dashboard controlling Hombli Christmas lights](docs/images/dashboard.png)
@@ -56,7 +61,8 @@ wide-screen view.
 
 - Exact DP25 codes for 57 named scenes from the Hombli app
 - Power, scene mode, speed and scene-brightness control
-- A Home Assistant package with helpers and scripts
+- A Home Assistant custom integration prepared for HACS distribution
+- A legacy Home Assistant YAML package for existing installations
 - A four-column Sections dashboard example
 - Compact scene buttons with active-scene highlighting
 - A start/stop random scene cycle that chooses a different effect every 30 seconds
@@ -78,7 +84,7 @@ See [Compatibility and safety](docs/COMPATIBILITY.md) before installing.
 
 ## Requirements
 
-- Home Assistant with [configuration packages](https://www.home-assistant.io/docs/configuration/packages/) enabled
+- Home Assistant with [HACS](https://www.hacs.xyz/) installed
 - [LocalTuya](https://github.com/rospogrigio/localtuya) configured for the light controller
 - [Button Card](https://github.com/custom-cards/button-card) installed for the
   supplied dashboard and animated preview
@@ -88,12 +94,56 @@ See [Compatibility and safety](docs/COMPATIBILITY.md) before installing.
 
 ## Installation
 
-### 1. Confirm the device
+### 1. Confirm and configure the device
 
 Do not start by sending the scene codes. First verify that your controller uses
 the same datapoints listed above. Read [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
 
-### 2. Install the package
+Configure the controller in LocalTuya before adding this integration. The
+integration deliberately reuses LocalTuya's local connection and does not ask
+for or store the Tuya local key.
+
+### 2. Install through HACS
+
+Until this repository has been accepted into the default HACS catalogue:
+
+1. Open **HACS → Integrations**.
+2. Open the three-dot menu and select **Custom repositories**.
+3. Add
+   `https://github.com/roelsroels/hombli-christmas-lights-home-assistant`
+   with category **Integration**.
+4. Find **Hombli Christmas Lights** in HACS and download it.
+5. Restart Home Assistant.
+
+### 3. Add the integration
+
+1. Open **Settings → Devices & services**.
+2. Select **Add integration** and search for **Hombli Christmas Lights**.
+3. Enter a display name and the exact device ID already used by LocalTuya.
+
+The device ID is stored in the Home Assistant config entry and is redacted from
+downloaded diagnostics. The local key remains exclusively in LocalTuya.
+
+### 4. Install the dashboard view
+
+The supplied example is a [Sections view](https://www.home-assistant.io/dashboards/sections/).
+Open the target dashboard view in raw configuration mode and paste the contents
+of:
+
+```text
+dashboards/sections-view.yaml
+```
+
+If your light entity is not
+`light.hombli_smart_christmas_lights_rgb`, replace that entity ID in the
+dashboard file. If Home Assistant assigned different entity IDs to the new
+integration, replace the example `hombli_christmas_lights_*` IDs as well.
+
+## Legacy YAML package installation
+
+Existing package-based installations can continue to use the original setup.
+Do not install the package and HACS integration for the same controller unless
+you intentionally want two sets of controls.
 
 Copy:
 
@@ -117,8 +167,6 @@ homeassistant:
 
 Do not create a second `homeassistant:` section.
 
-### 3. Add the device ID secret
-
 Add the device ID used by LocalTuya to `/config/secrets.yaml`:
 
 ```yaml
@@ -128,7 +176,7 @@ hombli_christmas_lights_device_id: "YOUR_TUYA_DEVICE_ID"
 The local key is intentionally not referenced or stored by this package. Keep
 all credentials and identifiers out of Git.
 
-### 4. Check and restart
+Then check and restart:
 
 In Home Assistant:
 
@@ -138,39 +186,30 @@ In Home Assistant:
 
 The restart is required because the package creates helpers and scripts.
 
-### 5. Install the dashboard view
-
-The supplied example is a [Sections view](https://www.home-assistant.io/dashboards/sections/).
-Open the target dashboard view in raw configuration mode and paste the contents
-of:
+The matching legacy dashboard is retained at:
 
 ```text
-dashboards/sections-view.yaml
+dashboards/sections-view-legacy-package.yaml
 ```
 
-If your light entity is not
-`light.hombli_smart_christmas_lights_rgb`, replace that entity ID in the
-dashboard file.
-
-## Entities and scripts created
+## Entities created by the HACS integration
 
 | Entity | Purpose |
 |---|---|
-| `input_select.christmas_lights_scene` | Scene selected in Home Assistant |
-| `input_boolean.christmas_lights_random_cycle` | Enables or stops automatic random scene cycling |
-| `input_number.christmas_lights_animation_speed` | DP103 control |
-| `input_number.christmas_lights_scene_brightness` | DP105 control |
-| `input_text.christmas_lights_active_scene` | Last scene successfully sent by these scripts |
-| `script.christmas_lights_set_scene` | Sends one named scene |
-| `script.christmas_lights_apply_controls` | Sends scene, speed and scene brightness |
-| `script.christmas_lights_capture_reference` | Runs all scenes in order for a comparison video |
-| `automation.christmas_lights_random_scene_cycle` | Selects a different random scene every 30 seconds while enabled |
+| `select.hombli_christmas_lights_scene` | Sends and displays the last successfully commanded scene |
+| `number.hombli_christmas_lights_animation_speed` | Immediate DP103 speed control |
+| `number.hombli_christmas_lights_scene_brightness` | Immediate DP105 scene-brightness control |
+| `button.hombli_christmas_lights_random_scene` | Selects one random scene |
+| `switch.hombli_christmas_lights_random_scene_cycle` | Selects a different random scene every 30 seconds |
+
+Entity IDs can receive a numeric suffix if an entity with the same name already
+exists. Use the IDs shown on the integration's device page in that case.
 
 ## How the dashboard state works
 
-Each scene button calls `script.christmas_lights_set_scene`. The active button
-is highlighted from `input_text.christmas_lights_active_scene`, so merely
-changing the dropdown does not falsely mark a scene as active.
+Each scene button calls `select.select_option`. The active button is highlighted
+from the integration's Scene entity, which changes only after LocalTuya accepts
+the command.
 
 The **Random scene cycle** button changes to a different random scene
 immediately and then every 30 seconds. Press it again to stop. The selected
@@ -192,16 +231,20 @@ The complete captured scene-to-DP25 table is in [docs/SCENES.md](docs/SCENES.md)
 3. Test power and work mode first.
 4. Test one scene code at low brightness.
 5. Capture the values reported while selecting scenes in the vendor app.
-6. Update both `scene_codes` and the `input_select` options.
-7. Use `script.christmas_lights_capture_reference` to record the real effects.
+6. Update `SCENE_CODES` in
+   `custom_components/hombli_christmas_lights/const.py` and, if retained, the
+   equivalent map in the legacy package.
+7. The legacy package's capture script can still be used to record the real
+   effects.
 
 Please contribute confirmed mappings with the device model, firmware version,
 protocol version and evidence. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Limitations
 
-- App-originated scene changes do not update
-  `input_text.christmas_lights_active_scene` automatically.
+- App-originated scene changes do not update the Scene entity automatically.
+- Scene, speed and scene brightness are assumed state: they represent the last
+  successful command sent by this integration, not live per-DP feedback.
 - The preview is illustrative, not a live LED feed.
 - Power monitoring was not found on the tested controller; separate support
   work has been submitted to the PowerCalc project.

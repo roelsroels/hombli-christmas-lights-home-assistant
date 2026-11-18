@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0-beta.1 — Unreleased
+
+- Added a UI-configured Home Assistant custom integration for HACS.
+- Added native Scene, Speed, Scene brightness, Random scene and Random scene
+  cycle entities backed by LocalTuya's `set_dp` action.
+- Added redacted diagnostics, translations and a project-owned integration
+  icon.
+- Added HACS and hassfest validation workflows and publication documentation.
+- Converted the primary dashboard example to the custom-integration entities.
+- Retained the original package and its matching dashboard as a legacy/manual
+  installation path.
+
 ## 1.1.0 — 2026-11-18
 
 - Added a dashboard button and package automation for starting and stopping a

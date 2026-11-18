@@ -1,0 +1,62 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This LocalTuya device is already configured.",
+      "unique_id_mismatch": "The LocalTuya device ID cannot be changed to a different controller. Add a separate integration entry instead."
+    },
+    "error": {
+      "required": "This field is required."
+    },
+    "step": {
+      "user": {
+        "title": "Set up Hombli Christmas Lights",
+        "description": "Enter the device ID of the already configured Hombli controller in LocalTuya. The integration never asks for or stores the local key.",
+        "data": {
+          "device_id": "LocalTuya device ID",
+          "name": "Name"
+        },
+        "data_description": {
+          "device_id": "The exact Tuya device ID used by your LocalTuya configuration.",
+          "name": "The name shown for the device in Home Assistant."
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Hombli Christmas Lights",
+        "description": "Update the display name or confirm the LocalTuya device ID. To control a different physical controller, add a separate integration entry.",
+        "data": {
+          "device_id": "LocalTuya device ID",
+          "name": "Name"
+        },
+        "data_description": {
+          "device_id": "The exact Tuya device ID used by your LocalTuya configuration.",
+          "name": "The name shown for the device in Home Assistant."
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "random_scene": {
+        "name": "Random scene"
+      }
+    },
+    "number": {
+      "animation_speed": {
+        "name": "Animation speed"
+      },
+      "scene_brightness": {
+        "name": "Scene brightness"
+      }
+    },
+    "select": {
+      "scene": {
+        "name": "Scene"
+      }
+    },
+    "switch": {
+      "random_cycle": {
+        "name": "Random scene cycle"
+      }
+    }
+  }
+}

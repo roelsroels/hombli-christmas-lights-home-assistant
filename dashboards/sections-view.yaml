@@ -21,7 +21,7 @@ sections:
               - type: light-color
                 controls: hue_saturation
           - type: custom:button-card
-            entity: input_text.christmas_lights_active_scene
+            entity: select.hombli_christmas_lights_scene
             name: Selected scene
             icon: mdi:string-lights
             show_state: true
@@ -31,8 +31,8 @@ sections:
             hold_action:
               action: none
             triggers_update:
-              - input_number.christmas_lights_animation_speed
-              - input_number.christmas_lights_scene_brightness
+              - number.hombli_christmas_lights_animation_speed
+              - number.hombli_christmas_lights_scene_brightness
             styles:
               card:
                 - padding: 14px
@@ -67,8 +67,8 @@ sections:
                   const scene = entity.state || 'Not set yet';
                   const colors = palettes[scene] || ['#666666', '#999999'];
                   const recorded = captures[scene];
-                  const speedEntity = states['input_number.christmas_lights_animation_speed'];
-                  const brightnessEntity = states['input_number.christmas_lights_scene_brightness'];
+                  const speedEntity = states['number.hombli_christmas_lights_animation_speed'];
+                  const brightnessEntity = states['number.hombli_christmas_lights_scene_brightness'];
                   const speed = Math.max(1, Math.min(100, Number(speedEntity?.state || 50)));
                   const brightness = Math.max(0.08, Math.min(1, Number(brightnessEntity?.state || 85) / 100));
                   // The reference was captured at speed 50. Scale playback around that point.
@@ -120,21 +120,24 @@ sections:
         title: Scene controls
         show_header_toggle: false
         entities:
-          - entity: input_select.christmas_lights_scene
+          - entity: select.hombli_christmas_lights_scene
             name: Hombli scene
-          - entity: input_number.christmas_lights_animation_speed
+          - entity: number.hombli_christmas_lights_animation_speed
             name: Speed
-          - entity: input_number.christmas_lights_scene_brightness
+          - entity: number.hombli_christmas_lights_scene_brightness
             name: Scene brightness
       - type: button
-        name: Apply scene controls
-        icon: mdi:play
+        entity: button.hombli_christmas_lights_random_scene
+        name: Random scene
+        icon: mdi:shuffle
         show_state: false
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_apply_controls
+          perform_action: button.press
+          target:
+            entity_id: button.hombli_christmas_lights_random_scene
       - type: button
-        entity: input_boolean.christmas_lights_random_cycle
+        entity: switch.hombli_christmas_lights_random_scene_cycle
         name: Random scene cycle
         icon: mdi:shuffle-variant
         show_state: true
@@ -145,7 +148,7 @@ sections:
       - type: heading
         heading: Colour & atmosphere
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Rainbow Cascade
         icon: mdi:palette
         show_state: false
@@ -184,11 +187,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Rainbow Cascade
+            option: Rainbow Cascade
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Disco dance
         icon: mdi:party-popper
         show_state: false
@@ -227,11 +232,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Disco dance
+            option: Disco dance
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Spectrum Sparkle
         icon: mdi:star-four-points
         show_state: false
@@ -270,11 +277,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Spectrum Sparkle
+            option: Spectrum Sparkle
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: National holiday
         icon: mdi:flag
         show_state: false
@@ -313,11 +322,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: National holiday
+            option: National holiday
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Valentine day
         icon: mdi:heart
         show_state: false
@@ -356,11 +367,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Valentine day
+            option: Valentine day
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Festive Fireworks
         icon: mdi:party-popper
         show_state: false
@@ -399,11 +412,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Festive Fireworks
+            option: Festive Fireworks
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Dreamland
         icon: mdi:weather-night
         show_state: false
@@ -442,11 +457,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Dreamland
+            option: Dreamland
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Coral Reef
         icon: mdi:water
         show_state: false
@@ -485,11 +502,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Coral Reef
+            option: Coral Reef
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Polka dots
         icon: mdi:palette
         show_state: false
@@ -528,11 +547,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Polka dots
+            option: Polka dots
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Aurora Borealis
         icon: mdi:weather-night
         show_state: false
@@ -571,11 +592,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Aurora Borealis
+            option: Aurora Borealis
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Celestial Symphony
         icon: mdi:music-note
         show_state: false
@@ -614,11 +637,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Celestial Symphony
+            option: Celestial Symphony
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Water fountain
         icon: mdi:water
         show_state: false
@@ -657,11 +682,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Water fountain
+            option: Water fountain
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Candle Light
         icon: mdi:fire
         show_state: false
@@ -700,11 +727,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Candle Light
+            option: Candle Light
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Cupid's flight
         icon: mdi:heart
         show_state: false
@@ -743,11 +772,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Cupid's flight
+            option: Cupid's flight
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Shiny pearls
         icon: mdi:star-four-points
         show_state: false
@@ -786,11 +817,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Shiny pearls
+            option: Shiny pearls
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Ocean Breeze
         icon: mdi:waves
         show_state: false
@@ -829,11 +862,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Ocean Breeze
+            option: Ocean Breeze
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Glowing lanterns
         icon: mdi:lightbulb-on
         show_state: false
@@ -872,11 +907,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Glowing lanterns
+            option: Glowing lanterns
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Cherry wave
         icon: mdi:waves
         show_state: false
@@ -915,11 +952,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Cherry wave
+            option: Cherry wave
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Luminous Lagoon
         icon: mdi:water
         show_state: false
@@ -958,15 +997,17 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Luminous Lagoon
+            option: Luminous Lagoon
   - type: grid
     cards:
       - type: heading
         heading: Festival & party
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Winter Whirlwind
         icon: mdi:snowflake
         show_state: false
@@ -1005,11 +1046,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Winter Whirlwind
+            option: Winter Whirlwind
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Festival of Lights
         icon: mdi:string-lights
         show_state: false
@@ -1048,11 +1091,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Festival of Lights
+            option: Festival of Lights
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Harmonic Hues
         icon: mdi:palette
         show_state: false
@@ -1091,11 +1136,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Harmonic Hues
+            option: Harmonic Hues
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Electric blip
         icon: mdi:lightning-bolt
         show_state: false
@@ -1134,11 +1181,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Electric blip
+            option: Electric blip
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Confetti party
         icon: mdi:party-popper
         show_state: false
@@ -1177,11 +1226,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Confetti party
+            option: Confetti party
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Swedish Rave
         icon: mdi:music-note
         show_state: false
@@ -1220,11 +1271,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Swedish Rave
+            option: Swedish Rave
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Mixed signals
         icon: mdi:shuffle-variant
         show_state: false
@@ -1263,11 +1316,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Mixed signals
+            option: Mixed signals
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Radiant Rhapsody
         icon: mdi:star-four-points
         show_state: false
@@ -1306,11 +1361,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Radiant Rhapsody
+            option: Radiant Rhapsody
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Prismatic Play
         icon: mdi:palette
         show_state: false
@@ -1349,11 +1406,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Prismatic Play
+            option: Prismatic Play
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Valentine's favorite
         icon: mdi:heart
         show_state: false
@@ -1392,11 +1451,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Valentine's favorite
+            option: Valentine's favorite
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Crazy Colors
         icon: mdi:palette
         show_state: false
@@ -1435,11 +1496,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Crazy Colors
+            option: Crazy Colors
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Color flash
         icon: mdi:flash
         show_state: false
@@ -1478,11 +1541,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Color flash
+            option: Color flash
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Strobe
         icon: mdi:lightbulb-on
         show_state: false
@@ -1521,11 +1586,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Strobe
+            option: Strobe
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Cosmic Pulse
         icon: mdi:creation
         show_state: false
@@ -1564,11 +1631,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Cosmic Pulse
+            option: Cosmic Pulse
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Fire truck
         icon: mdi:fire
         show_state: false
@@ -1607,11 +1676,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Fire truck
+            option: Fire truck
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Police siren
         icon: mdi:alarm-light
         show_state: false
@@ -1650,11 +1721,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Police siren
+            option: Police siren
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Vibrant Vortex
         icon: mdi:creation
         show_state: false
@@ -1693,11 +1766,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Vibrant Vortex
+            option: Vibrant Vortex
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Strawberry disco
         icon: mdi:party-popper
         show_state: false
@@ -1736,11 +1811,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Strawberry disco
+            option: Strawberry disco
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Mistery Mix
         icon: mdi:shuffle-variant
         show_state: false
@@ -1779,15 +1856,17 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Mistery Mix
+            option: Mistery Mix
   - type: grid
     cards:
       - type: heading
         heading: Christmas, winter & playful
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Electric sparks
         icon: mdi:lightning-bolt
         show_state: false
@@ -1826,11 +1905,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Electric sparks
+            option: Electric sparks
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Santa's party
         icon: mdi:party-popper
         show_state: false
@@ -1869,11 +1950,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Santa's party
+            option: Santa's party
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Santa's little helpers
         icon: mdi:account-group
         show_state: false
@@ -1912,11 +1995,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Santa's little helpers
+            option: Santa's little helpers
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Polar Express
         icon: mdi:train
         show_state: false
@@ -1955,11 +2040,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Polar Express
+            option: Polar Express
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Christmas Carol
         icon: mdi:music-note
         show_state: false
@@ -1998,11 +2085,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Christmas Carol
+            option: Christmas Carol
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Reindeer Run
         icon: mdi:run-fast
         show_state: false
@@ -2041,11 +2130,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Reindeer Run
+            option: Reindeer Run
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Red white and blue
         icon: mdi:flag
         show_state: false
@@ -2084,11 +2175,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Red white and blue
+            option: Red white and blue
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Dazzling Santa
         icon: mdi:gift
         show_state: false
@@ -2127,11 +2220,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Dazzling Santa
+            option: Dazzling Santa
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Crushed ice
         icon: mdi:snowflake
         show_state: false
@@ -2170,11 +2265,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Crushed ice
+            option: Crushed ice
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Mistletoe Magic
         icon: mdi:leaf
         show_state: false
@@ -2213,11 +2310,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Mistletoe Magic
+            option: Mistletoe Magic
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Icicle Illusion
         icon: mdi:snowflake
         show_state: false
@@ -2256,11 +2355,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Icicle Illusion
+            option: Icicle Illusion
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Starry night
         icon: mdi:weather-night
         show_state: false
@@ -2299,11 +2400,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Starry night
+            option: Starry night
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Soul pulse
         icon: mdi:heart-pulse
         show_state: false
@@ -2342,11 +2445,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Soul pulse
+            option: Soul pulse
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Nordic pulse
         icon: mdi:snowflake
         show_state: false
@@ -2385,11 +2490,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Nordic pulse
+            option: Nordic pulse
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Fire storm
         icon: mdi:fire
         show_state: false
@@ -2428,11 +2535,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Fire storm
+            option: Fire storm
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Snowy grasslands
         icon: mdi:snowflake
         show_state: false
@@ -2471,11 +2580,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Snowy grasslands
+            option: Snowy grasslands
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: The hulk
         icon: mdi:arm-flex
         show_state: false
@@ -2514,11 +2625,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: The hulk
+            option: The hulk
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Dragon dance
         icon: mdi:fire
         show_state: false
@@ -2557,11 +2670,13 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Dragon dance
+            option: Dragon dance
       - type: custom:button-card
-        entity: input_text.christmas_lights_active_scene
+        entity: select.hombli_christmas_lights_scene
         name: Space alien
         icon: mdi:alien
         show_state: false
@@ -2600,7 +2715,9 @@ sections:
                 - color: var(--primary-text-color)
         tap_action:
           action: perform-action
-          perform_action: script.christmas_lights_set_scene
+          perform_action: select.select_option
+          target:
+            entity_id: select.hombli_christmas_lights_scene
           data:
-            scene_name: Space alien
+            option: Space alien
 cards: []

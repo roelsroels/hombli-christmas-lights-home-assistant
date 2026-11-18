@@ -1,0 +1,12 @@
+{
+  "domain": "hombli_christmas_lights",
+  "name": "Hombli Christmas Lights",
+  "codeowners": ["@roelsroels"],
+  "config_flow": true,
+  "dependencies": ["localtuya"],
+  "documentation": "https://github.com/roelsroels/hombli-christmas-lights-home-assistant",
+  "integration_type": "device",
+  "iot_class": "assumed_state",
+  "issue_tracker": "https://github.com/roelsroels/hombli-christmas-lights-home-assistant/issues",
+  "version": "2.0.0-beta.1"
+}
