@@ -22,7 +22,7 @@ sections:
                 controls: hue_saturation
           - type: custom:button-card
             entity: input_text.christmas_lights_active_scene
-            name: Now playing
+            name: Selected scene
             icon: mdi:string-lights
             show_state: true
             show_label: false
