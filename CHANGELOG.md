@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0-beta.1 — Unreleased
+## 2.0.0 — 2026-11-18
 
 - Added a UI-configured Home Assistant custom integration for HACS.
 - Added native Scene, Speed, Scene brightness, Random scene and Random scene

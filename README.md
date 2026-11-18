@@ -34,9 +34,9 @@ This project is not affiliated with Hombli, Tuya, Home Assistant, LocalTuya, or
 the Button Card project.
 
 > [!NOTE]
-> The HACS custom integration is currently a `2.0.0-beta.1` migration from the
-> established YAML package. Existing package users should keep the legacy setup
-> until the integration has been tested on their controller.
+> Version `2.0.0` introduces the HACS custom integration. Existing package
+> users can keep the legacy setup until they are ready to migrate, but should
+> not run both configurations for the same controller at once.
 
 ## Dashboard preview
 

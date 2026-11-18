@@ -24,18 +24,17 @@ custom_components/hombli_christmas_lights/
 - HACS-first installation and removal documentation
 - One-click My Home Assistant link for adding the custom repository to HACS
 
-## Before publishing a stable release
+## Stable release and verification
 
-1. Install the integration as a HACS custom repository on a test Home Assistant
-   instance.
-2. Verify setup, unload/reload, restart, all five entities, diagnostics and
+Version `2.0.0` is the first HACS-installable release. After installing it on a
+test Home Assistant instance:
+
+1. Verify setup, unload/reload, restart, all five entities, diagnostics and
    LocalTuya error handling.
-3. Confirm the tested minimum Home Assistant version and add it to `hacs.json`
+2. Confirm the tested minimum Home Assistant version and add it to `hacs.json`
    if a minimum should be enforced.
-4. Replace the beta version in `manifest.json` with the stable release version.
-5. Update `CHANGELOG.md` and publish a GitHub release whose tag matches the
-   manifest version, for example `v2.0.0`.
-6. Confirm that the scheduled HACS and hassfest workflow passes on the release.
+3. Confirm that the scheduled HACS and hassfest workflow continues to pass on
+   the release.
 
 ## Default HACS catalogue submission
 
@@ -52,4 +51,4 @@ smart-home custom-integration lovelace
 ```
 
 The custom-repository installation route works before default-catalogue
-acceptance and is the recommended beta-test path.
+acceptance and is the recommended verification path.
