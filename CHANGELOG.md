@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 — 2026-11-18
+
+- Stop an active random scene cycle when the matching LocalTuya light turns
+  off, preventing a later timer tick from turning the string back on.
+- Added the same off-state protection to the legacy package automation.
+
 ## 2.0.0 — 2026-11-18
 
 - Added a UI-configured Home Assistant custom integration for HACS.

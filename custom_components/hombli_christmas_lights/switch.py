@@ -6,10 +6,14 @@ from collections.abc import Callable
 from datetime import datetime, timedelta
 
 from homeassistant.components.switch import SwitchEntity
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.const import STATE_OFF
+from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
-from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.event import (
+    async_track_state_change_event,
+    async_track_time_interval,
+)
 
 from . import HombliConfigEntry
 from .const import RANDOM_CYCLE_INTERVAL_SECONDS
@@ -35,7 +39,21 @@ class HombliRandomCycleSwitch(HombliChristmasLightsEntity, SwitchEntity):
         """Initialize the switch."""
         super().__init__(entry, entry.runtime_data, "random_cycle")
         self._attr_is_on = False
+        self._light_entity_id: str | None = None
         self._remove_interval: Callable[[], None] | None = None
+
+    async def async_added_to_hass(self) -> None:
+        """Stop cycling whenever the matching LocalTuya light turns off."""
+        await super().async_added_to_hass()
+        self._light_entity_id = self._controller.localtuya_light_entity_id()
+        if self._light_entity_id is not None:
+            self.async_on_remove(
+                async_track_state_change_event(
+                    self.hass,
+                    [self._light_entity_id],
+                    self._async_light_state_changed,
+                )
+            )
 
     async def async_turn_on(self, **kwargs: object) -> None:
         """Start random scene cycling and select the first scene immediately."""
@@ -76,5 +94,32 @@ class HombliRandomCycleSwitch(HombliChristmasLightsEntity, SwitchEntity):
             self._remove_interval = None
 
     async def _async_next_scene(self, now: datetime) -> None:
-        if self._attr_is_on:
-            await self._controller.async_select_random_scene()
+        if not self._attr_is_on:
+            return
+        if self._light_entity_id is None:
+            # The registry entry can appear after this integration during
+            # startup. Resolve it again before a scheduled scene is allowed to
+            # power the string on.
+            self._light_entity_id = self._controller.localtuya_light_entity_id()
+        if self._light_entity_id is not None and self.hass.states.is_state(
+            self._light_entity_id, STATE_OFF
+        ):
+            await self.async_turn_off()
+            return
+        await self._controller.async_select_random_scene()
+
+    async def _async_light_state_changed(self, event: Event) -> None:
+        """Disable random cycling when the physical light is switched off."""
+        new_state = event.data.get("new_state")
+        if (
+            self._attr_is_on
+            and new_state is not None
+            and new_state.state == STATE_OFF
+        ):
+            await self.async_turn_off()
+            # If a scene command was already holding the controller lock when
+            # the user switched the string off, send power-off once more after
+            # that command finishes. This makes the user's off action win the
+            # race without making the random-cycle switch itself turn off the
+            # lights when it is toggled normally.
+            await self._controller.async_ensure_power_off()

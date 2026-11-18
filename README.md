@@ -219,6 +219,9 @@ The **Random scene cycle** button changes to a different random scene
 immediately and then every 30 seconds. Press it again to stop. The selected
 speed and scene-brightness values remain unchanged while scenes cycle.
 
+Turning the LocalTuya light off also stops the random cycle immediately. The
+cycle will not turn the string back on at its next scheduled interval.
+
 The controller exposes the selected scene code but not its live per-LED frames.
 The animated preview therefore replays a recording-derived approximation. It
 shows the correct scene-specific grouping, colours, dark states and movement,

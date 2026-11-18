@@ -8,5 +8,5 @@
   "integration_type": "device",
   "iot_class": "assumed_state",
   "issue_tracker": "https://github.com/roelsroels/hombli-christmas-lights-home-assistant/issues",
-  "version": "2.0.0"
+  "version": "2.0.1"
 }
