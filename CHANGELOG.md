@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Renamed user-facing terminology to Home Assistant Marketplace while
+  retaining the required technical filenames and redirect identifiers.
+
 ## 2.1.2 — 2026-11-19
 
 - Changed the dashboard LED preview to static grey bulbs while the physical
@@ -13,10 +18,10 @@
 
 ## 2.1.0 — 2026-11-18
 
-- Removed the obsolete pre-HACS package, its duplicate dashboard and its
+- Removed the obsolete pre-Marketplace package, its duplicate dashboard and its
   secrets example.
 - Replaced the legacy installation documentation with a concise migration path
-  to the HACS integration.
+  to the Marketplace integration.
 
 ## 2.0.1 — 2026-11-18
 
@@ -26,12 +31,12 @@
 
 ## 2.0.0 — 2026-11-18
 
-- Added a UI-configured Home Assistant custom integration for HACS.
+- Added a UI-configured Home Assistant custom integration for Marketplace.
 - Added native Scene, Speed, Scene brightness, Random scene and Random scene
   cycle entities backed by LocalTuya's `set_dp` action.
 - Added redacted diagnostics, translations and a project-owned integration
   icon.
-- Added HACS and hassfest validation workflows and publication documentation.
+- Added Marketplace and hassfest validation workflows and publication documentation.
 - Converted the primary dashboard example to the custom-integration entities.
 - Retained the original package and its matching dashboard as a legacy/manual
   installation path.

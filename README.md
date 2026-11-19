@@ -3,7 +3,7 @@
 Local, cloud-free Home Assistant control and a Lovelace dashboard for the
 **Hombli Smart Christmas Lights RGB** controller. These Tuya-powered smart
 Christmas string/fairy lights are controlled through LocalTuya and the supplied
-HACS custom integration, with all 57 built-in RGB scenes/effects, scene speed,
+Home Assistant Marketplace custom integration, with all 57 built-in RGB scenes/effects, scene speed,
 scene brightness, active-scene highlighting, and an animated LED preview.
 The dashboard also includes a start/stop control that automatically selects a
 different random scene every 30 seconds.
@@ -34,7 +34,7 @@ This project is not affiliated with Hombli, Tuya, Home Assistant, LocalTuya, or
 the Button Card project.
 
 > [!NOTE]
-> Version 2 and later use the HACS custom integration. If you previously used
+> Version 2 and later use the Marketplace custom integration. If you previously used
 > the YAML package from version 1, remove it before adding the integration; see
 > [Migrating from the legacy package](#migrating-from-the-legacy-package).
 
@@ -61,7 +61,7 @@ wide-screen view.
 
 - Exact DP25 codes for 57 named scenes from the Hombli app
 - Power, scene mode, speed and scene-brightness control
-- A Home Assistant custom integration prepared for HACS distribution
+- A Home Assistant custom integration prepared for Marketplace distribution
 - A four-column Sections dashboard example
 - Compact scene buttons with active-scene highlighting
 - A start/stop random scene cycle that chooses a different effect every 30 seconds
@@ -82,7 +82,7 @@ See [Compatibility and safety](docs/COMPATIBILITY.md) before installing.
 
 ## Requirements
 
-- Home Assistant with [HACS](https://www.hacs.xyz/) installed
+- Home Assistant with the [Marketplace](https://www.hacs.xyz/) installed
 - [LocalTuya](https://github.com/rospogrigio/localtuya) configured for the light controller
 - [Button Card](https://github.com/custom-cards/button-card) installed for the
   supplied dashboard and animated preview
@@ -102,20 +102,20 @@ Configure the controller in LocalTuya before adding this integration. The
 integration deliberately reuses LocalTuya's local connection and does not ask
 for or store the Tuya local key.
 
-### 2. Install through HACS
+### 2. Install through Home Assistant Marketplace
 
-Until this repository has been accepted into the default HACS catalogue:
+Until this repository has been accepted into the default Marketplace catalogue:
 
-[![Open your Home Assistant instance and add this repository to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=roelsroels&repository=hombli-christmas-lights-home-assistant&category=integration)
+[![Open your Home Assistant instance and add this repository to Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=roelsroels&repository=hombli-christmas-lights-home-assistant&category=integration)
 
 Use the button above, or add the repository manually:
 
-1. Open **HACS → Integrations**.
+1. Open **Marketplace → Integrations**.
 2. Open the three-dot menu and select **Custom repositories**.
 3. Add
    `https://github.com/roelsroels/hombli-christmas-lights-home-assistant`
    with category **Integration**.
-4. Find **Hombli Christmas Lights** in HACS and download it.
+4. Find **Hombli Christmas Lights** in Marketplace and download it.
 5. Restart Home Assistant.
 
 ### 3. Add the integration
@@ -148,7 +148,7 @@ If you used a pre-2.0 release, migrate once instead of running both versions:
 
 1. Remove or rename `/config/packages/christmas_lights.yaml`.
 2. Restart Home Assistant so its old helpers, scripts and automations disappear.
-3. Install and add the HACS integration using the steps above.
+3. Install and add the Marketplace integration using the steps above.
 4. Replace the old dashboard view with `dashboards/sections-view.yaml`.
 5. Remove any remaining dashboard references to the old
    `input_select`, `input_number`, `input_boolean` and `script` entities.
@@ -156,7 +156,7 @@ If you used a pre-2.0 release, migrate once instead of running both versions:
 LocalTuya and its light entity remain in place; the migration does not require
 re-pairing or changing the controller's local key.
 
-## Entities created by the HACS integration
+## Entities created by the Marketplace integration
 
 | Entity | Purpose |
 |---|---|

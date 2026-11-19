@@ -18,7 +18,7 @@ and restart Home Assistant before loading this integration.
 
 ## Hombli Christmas Lights does not appear under Add integration
 
-Confirm HACS downloaded
+Confirm Marketplace downloaded
 `custom_components/hombli_christmas_lights/manifest.json`, then restart Home
 Assistant and clear the browser cache. Check the Home Assistant log for an
 integration manifest or import error.
@@ -35,7 +35,7 @@ Select, Number, Button and Switch entities instead.
 Install Button Card, add its frontend resource if your installation requires
 that step, and hard-refresh the browser.
 
-## The active scene is not highlighted with the HACS integration
+## The active scene is not highlighted with the Marketplace integration
 
 The highlight follows `select.hombli_christmas_lights_scene`. It changes after
 the integration successfully sends a scene through LocalTuya. A scene selected
@@ -60,7 +60,7 @@ file, or remove the obsolete cards manually.
 
 1. Remove the Hombli Christmas Lights config entry from **Settings → Devices &
    services**.
-2. Remove the integration from HACS.
+2. Remove the integration from Marketplace.
 3. Restart Home Assistant.
 4. Remove or replace the example dashboard view.
 

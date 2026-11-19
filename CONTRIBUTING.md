@@ -21,7 +21,7 @@ or other private installation data.
 - [ ] No secrets or installation-specific identifiers are committed.
 - [ ] YAML parses successfully.
 - [ ] Python files pass compilation and hassfest validation.
-- [ ] HACS validation passes for the `integration` category.
+- [ ] Marketplace validation passes for the `integration` category.
 - [ ] `manifest.json` and `hacs.json` remain valid JSON.
 - [ ] Every scene name matches its `scene_codes` key exactly.
 - [ ] Dashboard actions match the custom-integration entities.

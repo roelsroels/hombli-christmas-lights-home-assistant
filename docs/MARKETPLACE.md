@@ -1,6 +1,6 @@
-# HACS publication checklist
+# Marketplace publication checklist
 
-This repository is structured as a single HACS integration repository. The
+This repository is structured as a single Marketplace integration repository. The
 installable files live in:
 
 ```text
@@ -19,28 +19,28 @@ custom_components/hombli_christmas_lights/
 - Redacted diagnostics
 - Local 256×256 transparent brand icon
 - Root `hacs.json`
-- HACS and hassfest validation workflow
+- Marketplace and hassfest validation workflow
 - Public README, open-source license, issue template and changelog
-- HACS-first installation and removal documentation
-- One-click My Home Assistant link for adding the custom repository to HACS
+- Marketplace-first installation and removal documentation
+- One-click My Home Assistant link for adding the custom repository to Marketplace
 
 ## Stable release and verification
 
-Version `2.0.0` is the first HACS-installable release. After installing it on a
+Version `2.0.0` is the first Marketplace-installable release. After installing it on a
 test Home Assistant instance:
 
 1. Verify setup, unload/reload, restart, all five entities, diagnostics and
    LocalTuya error handling.
 2. Confirm the tested minimum Home Assistant version and add it to `hacs.json`
    if a minimum should be enforced.
-3. Confirm that the scheduled HACS and hassfest workflow continues to pass on
+3. Confirm that the scheduled Marketplace and hassfest workflow continues to pass on
    the release.
 
-## Default HACS catalogue submission
+## Default Marketplace catalogue submission
 
 The GitHub repository must remain public, have Issues enabled, use an OSI
 license, have a concise repository description and relevant repository topics.
-After the stable release is tested, submit it through the HACS default
+After the stable release is tested, submit it through the Marketplace default
 repository inclusion process as an **Integration**.
 
 Suggested topics:

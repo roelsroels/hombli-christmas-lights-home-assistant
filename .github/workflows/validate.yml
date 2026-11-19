@@ -26,10 +26,10 @@ jobs:
         uses: home-assistant/actions/hassfest@f4ca6f671bd429efb108c0f2fa0ae8af0215986c # master
 
   hacs:
-    name: HACS validation
+    name: Marketplace validation
     runs-on: ubuntu-latest
     steps:
-      - name: Run HACS validation
+      - name: Run Marketplace validation
         uses: hacs/action@d556e736723344f83838d08488c983a15381059a # 22.5.0
         with:
           category: integration
