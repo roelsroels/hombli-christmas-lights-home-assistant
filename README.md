@@ -186,6 +186,7 @@ interval.
 The controller exposes the selected scene code but not its live per-LED frames.
 The animated preview therefore replays a recording-derived approximation. It
 shows the correct scene-specific grouping, colours, dark states and movement,
+and changes to static grey bulbs while the light is off.
 but is not phase-locked to the physical string.
 
 ## Scene map

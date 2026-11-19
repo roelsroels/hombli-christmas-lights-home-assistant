@@ -31,6 +31,7 @@ sections:
             hold_action:
               action: none
             triggers_update:
+              - light.hombli_smart_christmas_lights_rgb
               - number.hombli_christmas_lights_animation_speed
               - number.hombli_christmas_lights_scene_brightness
             styles:
@@ -69,6 +70,8 @@ sections:
                   const recorded = captures[scene];
                   const speedEntity = states['number.hombli_christmas_lights_animation_speed'];
                   const brightnessEntity = states['number.hombli_christmas_lights_scene_brightness'];
+                  const powerEntity = states['light.hombli_smart_christmas_lights_rgb'];
+                  const isOff = !powerEntity || powerEntity.state !== 'on';
                   const speed = Math.max(1, Math.min(100, Number(speedEntity?.state || 50)));
                   const brightness = Math.max(0.08, Math.min(1, Number(brightnessEntity?.state || 85) / 100));
                   // The reference was captured at speed 50. Scale playback around that point.
@@ -86,7 +89,12 @@ sections:
                   const count = 18;
                   const fallback = Array.from({length: count}, (_, i) => String(i % colors.length).repeat(24));
                   const tracks = recorded || fallback;
-                  const bulbs = tracks.map((track, index) => {
+                  const bulbs = isOff
+                    ? Array.from({length: count}, (_, index) => {
+                        const x = 18 + index * 33;
+                        return `<circle cx="${x}" cy="33" r="5.5" fill="var(--disabled-text-color, #777777)" opacity="0.5"/>`;
+                      }).join('')
+                    : tracks.map((track, index) => {
                     const statesList = [...track];
                     let lastColor = colors[index % colors.length];
                     const fillValues = statesList.map(token => {
@@ -104,7 +112,7 @@ sections:
                       <animate attributeName="opacity" values="${opacityValues}" dur="${duration.toFixed(2)}s" calcMode="${calcMode}" repeatCount="indefinite"/>
                       <animate attributeName="r" values="${radiusValues}" dur="${duration.toFixed(2)}s" calcMode="${calcMode}" repeatCount="indefinite"/>
                     </circle>`;
-                  }).join('');
+                      }).join('');
                   return `<svg viewBox="0 0 600 66" preserveAspectRatio="none" style="display:block;width:100%;height:66px">
                     <defs>
                       <filter id="hombliGlow" x="-100%" y="-100%" width="300%" height="300%">

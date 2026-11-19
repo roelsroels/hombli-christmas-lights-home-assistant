@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.2 — 2026-11-19
+
+- Changed the dashboard LED preview to static grey bulbs while the physical
+  light entity is off; scene animation resumes automatically when it turns on.
+
 ## 2.1.1 — 2026-11-18
 
 - Fixed random-cycle shutdown detection when scene control uses LocalTuya but
