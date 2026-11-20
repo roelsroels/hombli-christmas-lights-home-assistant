@@ -1,4 +1,4 @@
-# Marketplace publication checklist
+# Marketplace publication status
 
 This repository is structured as a single Marketplace integration repository. The
 installable files live in:
@@ -22,7 +22,7 @@ custom_components/hombli_christmas_lights/
 - Marketplace and hassfest validation workflow
 - Public README, open-source license, issue template and changelog
 - Marketplace-first installation and removal documentation
-- One-click My Home Assistant link for adding the custom repository to Marketplace
+- Official inclusion in the default Marketplace catalogue
 
 ## Stable release and verification
 
@@ -36,19 +36,17 @@ test Home Assistant instance:
 3. Confirm that the scheduled Marketplace and hassfest workflow continues to pass on
    the release.
 
-## Default Marketplace catalogue submission
+## Default Marketplace catalogue
 
 The GitHub repository must remain public, have Issues enabled, use an OSI
 license, have a concise repository description and relevant repository topics.
-After the stable release is tested, submit it through the Marketplace default
-repository inclusion process as an **Integration**.
+The integration was accepted into the default Marketplace catalogue on
+19 November 2026 and can now be found by searching for
+**Hombli Christmas Lights** under **Marketplace → Integrations**.
 
 Suggested topics:
 
 ```text
-home-assistant hacs localtuya tuya hombli christmas-lights rgbic
+home-assistant marketplace localtuya tuya hombli christmas-lights rgbic
 smart-home custom-integration lovelace
 ```
-
-The custom-repository installation route works before default-catalogue
-acceptance and is the recommended verification path.

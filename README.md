@@ -82,7 +82,7 @@ See [Compatibility and safety](docs/COMPATIBILITY.md) before installing.
 
 ## Requirements
 
-- Home Assistant with the [Marketplace](https://www.hacs.xyz/) installed
+- Home Assistant with Marketplace installed
 - [LocalTuya](https://github.com/rospogrigio/localtuya) configured for the light controller
 - [Button Card](https://github.com/custom-cards/button-card) installed for the
   supplied dashboard and animated preview
@@ -104,19 +104,10 @@ for or store the Tuya local key.
 
 ### 2. Install through Home Assistant Marketplace
 
-Until this repository has been accepted into the default Marketplace catalogue:
-
-[![Open your Home Assistant instance and add this repository to Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=roelsroels&repository=hombli-christmas-lights-home-assistant&category=integration)
-
-Use the button above, or add the repository manually:
-
 1. Open **Marketplace → Integrations**.
-2. Open the three-dot menu and select **Custom repositories**.
-3. Add
-   `https://github.com/roelsroels/hombli-christmas-lights-home-assistant`
-   with category **Integration**.
-4. Find **Hombli Christmas Lights** in Marketplace and download it.
-5. Restart Home Assistant.
+2. Search for **Hombli Christmas Lights**.
+3. Install the integration.
+4. Restart Home Assistant.
 
 ### 3. Add the integration
 

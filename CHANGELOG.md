@@ -4,6 +4,8 @@
 
 - Renamed user-facing terminology to Home Assistant Marketplace while
   retaining the required technical filenames and redirect identifiers.
+- Replaced the provisional custom-repository instructions with the official
+  Marketplace installation flow after catalogue acceptance.
 
 ## 2.1.2 — 2026-11-19
 
